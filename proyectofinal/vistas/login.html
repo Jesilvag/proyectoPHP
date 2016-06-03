@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html  ng-app="logintuChanceApp" >
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="../css/main.css">
+	<script type="text/javascript" src="../js/libs/angular.js"></script>
+	<script type="text/javascript" src="../js/libs/angular-ui-router.js"></script>
+    <script type="text/javascript" src="../js/libs/angular-route.js"></script>
+    <script type="text/javascript" src="../js/libs/angular-cookies.js"></script>
+	<script type="text/javascript" src="../js/libs/app.js"></script>
+	<script type="text/javascript" src="../js/controladores/controlador.js"></script>
+	
+	<title>Iniciar sesion</title>
+</head>
+<body ng-controller="loginTuChanceCtrl">
+
+	<form class="formularioLogin">
+		
+		<input class="usuario" type="text" name="usuario" placeholder="Usuario" 
+		ng-model="usuario.username">		
+		<input class="contrasena" type="password" name="contrasena" placeholder="Contraseña"
+		ng-model="usuario.password">
+
+		<input class="btn" ng-click="autenticarSesion(usuario)"type="button" value="Ingresar" />
+	</form>
+</body>
+</html>

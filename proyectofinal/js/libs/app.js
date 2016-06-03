@@ -1,6 +1,10 @@
 'use strict';
-var modulo=angular.module('tuChanceApp',['tuChanceApp.controllers','ui.router','ngRoute']);
-modulo.config(function($routeProvider,$urlRouterProvider){
+var modulo=angular.module('tuChanceApp',['ui.router','ngRoute']);
+modulo.config(function($routeProvider,$urlRouterProvider,$stateProvider){
+
+  if(localStorage['usuario']===undefined){
+       window.location.href='index.html';
+  }else{
 	$routeProvider
 	.when('/',{
 		templateUrl:'viewApuestas.php',
@@ -8,27 +12,59 @@ modulo.config(function($routeProvider,$urlRouterProvider){
 	}).when('/viewEstadisticas',{
        templateUrl:'viewEstadisticas.php',
 		controller: 'tuChanceCtrl'
-	});
+	})
 	$urlRouterProvider.otherwise('/');
+}
 });
-var modAdmin=angular.module('adminTuChanceApp',['adminTuChanceApp.controllers','ui.router','ngRoute']);
-modAdmin.config(function($routeProvider,$urlRouterProvider){
+var moduloAdmin=angular.module('AdmintuChanceApp',['ui.router','ngRoute']);
+moduloAdmin.config(function($routeProvider,$urlRouterProvider,$stateProvider){
+  var usuario=angular.fromJson(localStorage.getItem('usuario'));
+ 
+  if(localStorage['usuario']===undefined || usuario[0].administrador==0){
+       window.location.href='index.html';
+  }else{
     $routeProvider
-    .when('/',{
+.when('/',{
         templateUrl:'usuarios.php',
-        controllers:'adminTuChanceCtrl'
+        controller:'adminTuChanceCtrl'
     }).when('/ventas',{
             templateUrl:'ventas.php',
-        controllers:'adminTuChanceCtrl'
+        controller:'adminTuChanceCtrl'
     }).when('/estadisticas',{
-          templateUrl:'viewEstadisticas.php',
-        controllers:'adminTuChanceCtrl'
+          templateUrl:'estadisticas.php',
+        controller:'adminTuChanceCtrl'
     }).when('/vistaMensajes',{
           templateUrl:'vistaMensajes.php',
-        controllers:'adminTuChanceCtrl'
+        controller:'adminTuChanceCtrl'
     }).when('/adminLoterias',{
-    	templateUrl:'adminLoterias.php',
-        controllers:'adminTuChanceCtrl'
+        templateUrl:'adminLoterias.php',
+        controller:'adminTuChanceCtrl'
+    }).when('/agregarusuario',{
+      templateUrl:'agregarusuario.php',
+      controller:'adminTuChanceCtrl'
     });
-    $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/');
+        }
+});
+var moduloLogin=angular.module('logintuChanceApp',['ui.router','ngRoute']);
+moduloLogin.config(function($routeProvider,$urlRouterProvider,$stateProvider){
+       $urlRouterProvider.otherwise('/');
+        $stateProvider
+  .state('login', 
+  {        
+        controller: 'loginTuChanceCtrl',
+        templateUrl: '../vistas/login.html'
+  })
+  .state('administrador',   {
+        
+        redirectTo: 'indexAdmin.php',
+        controller:  'loginTuChanceCtrl'
+  })
+  .state('usuario',
+   {
+        
+        controller: 'loginTuChanceCtrl',
+        templateUrl: '../vistas/viewOpciones.php'
+   });
+
 });

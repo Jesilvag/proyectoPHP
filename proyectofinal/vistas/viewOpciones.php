@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="tuChanceApp" >
+<html ng-app="tuChanceApp"  ng-controller="tuChanceCtrl">
 <head>
 	<title>Opciones</title>
 	<meta charset="utf-8">
@@ -10,7 +10,7 @@
 	<script type="text/javascript" src="../js/jquery.js"></script>
 	<script type="text/javascript" src="../js/dist/Chart.bundle.js"></script>	
 	<script type="text/javascript" src="../js/libs/angular.js"></script>
-		<script type="text/javascript" src="../js/libs/angular-ui-router.js"></script>
+	<script type="text/javascript" src="../js/libs/angular-ui-router.js"></script>
     <script type="text/javascript" src="../js/libs/angular-route.js"></script>
 	<script type="text/javascript" src="../js/libs/app.js"></script>
 	<script type="text/javascript" src="../js/controladores/controlador.js"></script>
@@ -20,10 +20,10 @@
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 </head>
 
-<body>
+<body >
 
 	<header>
-		<h1>Tu chance</h1>
+		<h1>Tu chance-{{conectado}}</h1>
 		<div class="menu_bar">
 			<a href="#" class="btn_menu"><span class="icon-menu3"></span>Menu</a>
 		</div>
@@ -35,6 +35,7 @@
 				<ul id="opciones">
 					<li><a href="#/"><span class="icon-cog"></span>Apuestas</a></li>
 					<li><a href="#/viewEstadisticas"><span class="icon-stats-dots"></span>Estadisticas</a></li>  
+				    <li><a href ng-click="cerrarSesion()">Cerrar sesion</a></li>
 				</ul>
 			</div>
 			<div class="contenido" ng-view>				

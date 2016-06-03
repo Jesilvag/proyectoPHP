@@ -1,5 +1,6 @@
 <?php
 error_reporting(E_ALL);
+
 use Phalcon\Loader;
 use Phalcon\Mvc\Micro;
 use Phalcon\Di\FactoryDefault;
@@ -10,8 +11,8 @@ include 'DB_tuchance.php';
 
 //Inicio de las rutas
 $app->get('/api/usuarios',function() use ($app){
-   $phql="SELECT * FROM usuarios ORDER BY nombre";
-   $usuarios=$app->modelsManager->executeQuery($phql);
+   $phql="SELECT * FROM usuarios WHERE administrador=:admin: ORDER BY nombre";
+   $usuarios=$app->modelsManager->executeQuery($phql,array('admin'=>0));
    $data=array();
    foreach ($usuarios as $user ) {
    	$data[]=array(
@@ -25,20 +26,26 @@ $app->get('/api/usuarios',function() use ($app){
    }
    echo json_encode($data);
 });
-//Busca un usuario por nombre
-$app->get('/api/usuarios/search/{nombre}',function($nombre) use ($app){
-  $phql="SELECT * FROM usuarios WHERE nombre LIKE :nombre: ORDER BY nombre";
-  $usuarios=$app->modelsManager->executeQuery($phql,array('nombre'=>'%'.$nombre.'%'));
-  $data[]=array();
-  foreach ($usuarios as $user) {
-  $data[]=array(
+//Busca un usuario por username
+$app->get('/api/usuarios/autenticar/{usuario}',function($usuario) use ($app){
+ 
+  $userJ=json_decode($usuario,true);
+  $phql="SELECT idusuarios,username,bloqueado,administrador FROM usuarios WHERE username=:username: AND password=:password:";
+   $usuarios=$app->modelsManager->executeQuery($phql,array(
+    'username'=>$userJ['username'],
+    'password'=>sha1($userJ['password'])));
+   $data=array();
+   foreach ($usuarios as $user ) {
+    $data[]=array(
       'idusuarios' =>$user->idusuarios,
-      'nombre'=>$user->nombre); 
-     
+      'username'=>$user->username,      
+      'bloqueado'=>$user->bloqueado,
+      'administrador'=>$user->administrador
+       
+        );
    }
    echo json_encode($data);
-
-});
+  });
 //Busca un usuario por cedula
 $app->get('/api/usuarios/{id:[0-9]+}',function($id) use ($app){
   $phql="SELECT * FROM usuarios WHERE idusuarios LIKE :id:";
@@ -65,12 +72,18 @@ $app->get('/api/usuarios/{id:[0-9]+}',function($id) use ($app){
 //Crea un usuario
 $app->post('/api/usuarios',function() use ($app){
     $user=$app->request->getJsonRawBody();
-    $phql="INSERT INTO usuarios(idusuarios,nombre,apellido,username) VALUES(:idusuarios:,:nombre:,:apellido:,:username:)";
+    print_r($user);
+    $pass=$user->password;
+    $phql="INSERT INTO usuarios(cedula,nombre,apellido,username,bloqueado,administrador,password) 
+                        VALUES(:cedula:,:nombre:,:apellido:,:username:,:bloqueado:,:administrador:,:password:)";
     $status=$app->modelsManager->executeQuery($phql,array(
-       'idusuarios'=> $user->id,
+       'cedula'=> $user->cedula,
        'nombre'=>$user->nombre,
-       'apellido'=>$user->edad,
-       'username'=>$user->username
+       'apellido'=>$user->apellido,
+       'username'=>$user->username,
+       'bloqueado'=>$user->habilitado,
+       'administrador'=>$user->administrador,
+       'password'=>sha1($pass)
         ));
       $response= new Response();
       if ($status->success()==true) {
@@ -93,12 +106,13 @@ $app->post('/api/usuarios',function() use ($app){
 
 });
 //Bloquear usuario
-$app->put('/api/usuarios/{cedula}',function($cedula) use ($app){
-      $user=$app->request->getJsonRawBody();
-      $phql="UPDATE usuarios SET bloqueado=:is_bloqueado: WHERE cedula=:cedula:";
+$app->put('/api/usuarios/{username}',function($username) use ($app){
+  print_r($username);
+      $usuario=$app->request->getJsonRawBody();
+      $phql="UPDATE usuarios SET bloqueado=:bloqueado: WHERE username=:username:";
       $status=$app->modelsManager->executeQuery($phql,array(
-       'cedula'=>$cedula,
-       'is_bloqueado'=> $user->$is_bloqueado       
+       'username'=>$usuario->username,
+       'bloqueado'=> 1      
         ));
       $response= new Response();
       if ($status->success()==true) {
@@ -143,6 +157,7 @@ $app->delete('/api/usuarios/{cedula}',function($cedula) use ($app){
 });
 
 include 'loteria.php';
+include 'apuestas.php';
 //Fin de las rutas
 $app->handle();
 

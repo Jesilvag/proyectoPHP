@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="adminTuChanceApp">
+<html lang="en" ng-app="AdmintuChanceApp" ng-controller="adminTuChanceCtrl" >
 <head>
 	<meta charset="UTF-8">
 	<title>Administrador</title>
 	<link rel="stylesheet" href="../css/main.css">
 	<link rel="stylesheet" href="../css/style.css">
 	<script type="text/javascript" src="../js/jquery.js"></script>
-		<script type="text/javascript" src="../js/dist/Chart.bundle.js"></script>
-		<script type="text/javascript" src="../js/libs/angular.js"></script>
-		<script type="text/javascript" src="../js/libs/angular-ui-router.js"></script>
+	<script type="text/javascript" src="../js/dist/Chart.bundle.js"></script>
+	<script type="text/javascript" src="../js/libs/angular.js"></script>
+	<script type="text/javascript" src="../js/libs/angular-ui-router.js"></script>
     <script type="text/javascript" src="../js/libs/angular-route.js"></script>
 	<script type="text/javascript" src="../js/libs/app.js"></script>
 	<script type="text/javascript" src="../js/controladores/controlador.js"></script>
@@ -20,7 +20,7 @@
 </head>
 <body>
 	<header>
-		<h1>Tu Chance-Administrador</h1>
+		<h1>Tu Chance-Administrador:{{conectado}}</h1>
 		<div class="menu_bar">
 			<a href="#" class="btn_menu"><span class="icon-menu3"></span>Menu</a>
 		</div>
@@ -32,7 +32,9 @@
 	           <li><a href="#/estadisticas"><span class="icon-briefcase"></span>Ventas</a></li>
 	           <li><a href="#/vistaMensajes"><span class="icon-bubble"></span>Mensajes</a></li>
 	           <li><a  href="#/adminLoterias"><span class="icon-cog"></span>Administrar Loterias</a></li>
-	           <li><a href="#/ventas"><span class="icon-stats-dots"></span>Estadisticas</a></li>  
+	           <li><a href="#/agregarusuario"><span class="icon-user"></span>Agregar Usuarios</a></li>
+	           <li><a href="#/ventas"><span class="icon-stats-dots"></span>Estadisticas</a></li>
+	           <li><a href ng-click="cerrarSesion()">Cerrar sesion</a></li> 
 	    </ul>
 	</nav>
 	</div>

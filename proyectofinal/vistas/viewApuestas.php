@@ -6,7 +6,7 @@
     <div class="loteria">
      <input class="numero" ng-model="apuesta.numeroApuesta" name="numero" type="text" 
      value="" placeholder="Ingresa el numero" required pattern="[0-9]{2,5}" />
-     <select class="serie" ng-options="loteriaSerie.numSerie for loteriaSerie in loteriasSeries" ng-model="loteriaSerie" >
+     <select class="serie" required ng-options="loteriaSerie.numSerie for loteriaSerie in loteriasSeries" ng-model="loteriaSerie" >
        
      </select>
    </div>

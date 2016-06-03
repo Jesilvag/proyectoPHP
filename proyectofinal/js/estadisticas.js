@@ -1,4 +1,10 @@
 $(document).ready(function(){
+url = 'http://localhost/serviciosTuChance/api/usuarios';
+datos = {};
+$.getJSON(url, datos, function(response){
+    console.log(response);
+    console.log(response[0])
+});
 var datosVentas={
 		type:"pie",
 		data:{
