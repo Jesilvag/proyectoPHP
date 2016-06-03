@@ -16,18 +16,23 @@ use Phalcon\Http\Response;
 
 $app->post('/api/apuestas',function() use ($app){
     $apuesta=$app->request->getJsonRawBody();
-    //print_r( $apuesta);
-    $usu=22;
-$phql="INSERT INTO apuestas(valor_apuesta,valor_premio,fecha,numero,serie,loteria,usuarios_idusuarios) VALUES(:valor_apuesta:,:valor_premio:,:fecha:,:numero:,:serie:,:loteria:,:usuario:)";
-    $status=$app->modelsManager->executeQuery($phql,array(
-       'valor_apuesta'=>$apuesta->valorApuesta,
-       'valor_premio'=>$apuesta->premio,
-       'fecha'=>$apuesta->fecha,
-       'numero'=>$apuesta->numeroApuesta,
-       'serie'=>$apuesta->serie,
-       'loteria'=>$apuesta->loteria->idloterias,
-        'usuario'=>$usu       
-        ));
+   
+    $fecha=localtime();
+    for ($i=0; $i <count($apuesta); $i++) { 
+          $phql="INSERT INTO apuestas(valor_apuesta,valor_premio,fecha,numero,serie,loteria,usuarios_idusuarios) VALUES(:valor_apuesta:,:valor_premio:,:fecha:,:numero:,:serie:,:loteria:,:usuario:)";
+
+        $status=$app->modelsManager->executeQuery($phql,array(
+       'valor_apuesta'=>$apuesta[$i]->valorApuesta,
+       'valor_premio'=>$apuesta[$i]->premio,
+       'fecha'=>$fecha,
+       'numero'=>$apuesta[$i]->numeroApuesta,
+       'serie'=>$apuesta[$i]->serie,
+       'loteria'=>$apuesta[$i]->loteria->idloterias,
+        'usuario'=>$apuesta[$i]->usuario    
+        )); 
+      }  
+
+       
       $response= new Response();
       if ($status->success()==true) {
         $response->setJsonContent(array('status'=>'OK'));

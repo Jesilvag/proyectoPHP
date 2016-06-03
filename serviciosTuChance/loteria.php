@@ -11,6 +11,7 @@ use Phalcon\Http\Response;
    		'nombre'=>$loteria->nombre     
         );
    }
+   
    echo json_encode($data);
 });
 

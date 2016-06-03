@@ -25,7 +25,7 @@ $scope.loteriaSerie.numSerie="";
 $rootScope.getLoterias=function(){
 $http({
 			method:'GET',
-			url:'http://localhost/serviciosTuChance/api/loterias/'
+			url:'https://tuchance-jhonesi.c9users.io/serviciosTuChance/api/loterias/'
 
 		}).then(function successCallback(response){
 			$scope.loterias=response.data;
@@ -36,7 +36,7 @@ $http({
 $scope.getLoteriasSeries=function(id){
 $http({
 			method:'GET',
-			url:'http://localhost/serviciosTuChance/api/loteriasSeries/'+id
+			url:'https://tuchance-jhonesi.c9users.io/serviciosTuChance/api/loteriasSeries/'+id
 
 		}).then(function successCallback(response){
 			$scope.loteriasSeries=response.data;
@@ -102,7 +102,7 @@ $scope.$watch(function(){
     	console.log(angular.toJson(apuesta,true));
     	$http({
 			method:'POST',
-			url:'http://localhost/serviciosTuChance/api/apuestas/',
+			url:'https://tuchance-jhonesi.c9users.io/serviciosTuChance/api/apuestas/',
 			data: angular.toJson(apuesta,true)
 		}).then(function successCallback(response){
 			if(angular.fromJson(response.data).status==="OK"){
@@ -179,7 +179,7 @@ $scope.conectado=usuario[0].username;
         console.log(datos);
         $http({
             method:'POST',
-            url:'http://localhost/serviciosTuChance/api/usuarios',
+            url:'https://tuchance-jhonesi.c9users.io/serviciosTuChance/api/usuarios',
             data:angular.toJson(datos,true)
         }).then(function successCallback(response){
             if(angular.fromJson(response.data).status==="OK"){
@@ -196,7 +196,7 @@ $scope.conectado=usuario[0].username;
     $scope.addLoteria=function(){
         $http({
             method:'POST',
-            url:'http://localhost/serviciosTuChance/api/loterias',
+            url:'https://tuchance-jhonesi.c9users.io/serviciosTuChance/api/loterias',
             data:angular.toJson($scope.loteria,true)           
 
         }).then(function successCallback(response){
@@ -217,7 +217,7 @@ $scope.conectado=usuario[0].username;
         console.log($scope.loteriaSeleccionada.idloterias);
         $http({
             method:'POST',
-            url:'http://localhost/serviciosTuChance/api/bloquear/'+numero,
+            url:'https://tuchance-jhonesi.c9users.io/serviciosTuChance/api/bloquear/'+numero,
             data:angular.toJson($scope.numerobloqueado,true)           
 
         }).then(function successCallback(response){
@@ -234,7 +234,7 @@ $scope.conectado=usuario[0].username;
     $scope.getLoterias=function(){
 $http({
             method:'GET',
-            url:'http://localhost/serviciosTuChance/api/loterias/'
+            url:'https://tuchance-jhonesi.c9users.io/serviciosTuChance/api/loterias/'
 
         }).then(function successCallback(response){
             $scope.loterias=response.data;
@@ -245,7 +245,7 @@ $http({
     $scope.getUsuarios=function(){
       $http({
            method:'GET',
-           url:'http://localhost/serviciosTuChance/api/usuarios'
+           url:'https://tuchance-jhonesi.c9users.io/serviciosTuChance/api/usuarios'
       }).then(function successCallback(response){
             $scope.usuarios=response.data;
         },function errorCallback (response){
@@ -256,7 +256,7 @@ $http({
         console.log(username);
       $http({
         method:'PUT',
-        url:'http://localhost/serviciosTuChance/api/usuarios/'+username,
+        url:'https://tuchance-jhonesi.c9users.io/serviciosTuChance/api/usuarios/'+username,
         data:angular.toJson($scope.usuario,true)
       }).then(function successCallback(response){
             if(angular.fromJson(response.data).status=="OK"){
@@ -289,7 +289,7 @@ moduloLogin.controller('loginTuChanceCtrl',function($scope,$http,$location,$q,$s
         $scope.autenticarSesion=function(usuario){
         	$http({
         		method:'GET',
-        		url:'http://localhost/serviciosTuChance/api/usuarios/autenticar/'+angular.toJson(usuario,true),
+        		url:'https://tuchance-jhonesi.c9users.io/serviciosTuChance/api/usuarios/autenticar/'+angular.toJson(usuario,true),
         		
         	}).then(function successCallback(response){
         		console.log(response.data);
