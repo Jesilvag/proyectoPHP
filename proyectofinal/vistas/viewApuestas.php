@@ -40,7 +40,7 @@
 <div class="confirmar">
 <label >Total:${{totalApuesta}}</label> 
 
-<button name="btnConfirmar" ng-click="agregarTransaccion()"class="btn">Confirmar</button>
+<button name="btnConfirmar" ng-click="confirmarTransaccion()"class="btn">Confirmar</button>
 </div>
 </section>
 

@@ -16,7 +16,7 @@ use Phalcon\Http\Response;
 
 $app->post('/api/apuestas',function() use ($app){
     $apuesta=$app->request->getJsonRawBody();
-   
+    print_r($apuesta);
     $fecha=localtime();
     for ($i=0; $i <count($apuesta); $i++) { 
           $phql="INSERT INTO apuestas(valor_apuesta,valor_premio,fecha,numero,serie,loteria,usuarios_idusuarios) VALUES(:valor_apuesta:,:valor_premio:,:fecha:,:numero:,:serie:,:loteria:,:usuario:)";

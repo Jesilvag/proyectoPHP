@@ -69,6 +69,24 @@ $app->get('/api/usuarios/{id:[0-9]+}',function($id) use ($app){
    return $response;
 
 });
+$app->get('/api/ventas',function() use ($app){
+  $phql="SELECT usuarios.username,COUNT(*) AS total FROM apuestas  
+INNER JOIN usuarios
+ON usuarios.idusuarios=apuestas.usuarios_idusuarios
+WHERE fecha=CURDATE()
+GROUP BY apuestas.usuarios_idusuarios";
+  $ventas=$app->modelsManager->executeQuery($phql);
+   $data=array();
+   foreach ($ventas as $venta) {
+    $data[]=array(
+      'username' =>$venta->username,
+      'total'=>$venta->total
+      
+        );
+   }
+   echo json_encode($data,true);
+
+});
 //Crea un usuario
 $app->post('/api/usuarios',function() use ($app){
     $user=$app->request->getJsonRawBody();

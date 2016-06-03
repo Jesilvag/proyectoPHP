@@ -20,10 +20,10 @@ $di = new FactoryDefault();
 $di->set('db', function () {
     return new PdoMysql(
         array(
-            "host"     => getenv('IP'),
+            "host"     => "localhost",
             "username" => "root",
             "password" => "",
-            "dbname"   => "tuchance"
+            "dbname"   => "tu_chance"
         )
     );
 });

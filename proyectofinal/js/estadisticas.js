@@ -1,10 +1,13 @@
 $(document).ready(function(){
-url = 'http://localhost/serviciosTuChance/api/usuarios';
+	var nombres=[];
+	var ventas=[];
+url = 'http://localhost/serviciosTuChance/api/ventas/';
 datos = {};
 $.getJSON(url, datos, function(response){
-    console.log(response);
-    console.log(response[0])
+    console.log(response[0].username);
+    
 });
+
 var datosVentas={
 		type:"pie",
 		data:{
@@ -16,12 +19,7 @@ var datosVentas={
 			     12,
 			     14
 			],
-			backgroundColor:[
-			"#AB5353",
-			"#AB53AB",
-			"#5953AB",
-			"#53A2AB"
-			],
+			backgroundColor:[],
 
 		}],
 		labels : [
