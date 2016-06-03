@@ -7,7 +7,7 @@ $rootScope.loterias=[];
 var usuario=angular.fromJson(localStorage.getItem('usuario'));
  
 $scope.conectado=usuario[0].username;
-
+$scope.idusuario=usuario[0].idusuarios;
 $scope.apuesta={};
 $scope.apuesta.fecha="";
 $scope.apuesta.numeroApuesta="";
@@ -77,7 +77,8 @@ $scope.$watch(function(){
          loteria:$scope.loteria,
          fecha:$scope.apuesta.fecha=new Date().toJSON().slice(0,10),
          valorApuesta:$scope.apuesta.valorApuesta,
-         premio:$scope.apuesta.premio
+         premio:$scope.apuesta.premio,
+         usuario:$scope.idusuario
      	}
      	);
      $scope.totalTransaccion();
@@ -91,19 +92,19 @@ $scope.$watch(function(){
 
 	  }
     };
-     $scope.agregarTransaccion=function(){
-         for (i = 0; i < $scope.apuestas.length; i++) {
-         	$scope.confirmarTransaccion($scope.apuestas[i]);
-         }
-     };
-    $scope.confirmarTransaccion=function(apuesta){
+     // $scope.agregarTransaccion=function(){
+     //     for (i = 0; i < $scope.apuestas.length; i++) {
+     //     	$scope.confirmarTransaccion($scope.apuestas[i]);
+     //     }
+     // };
+    $scope.confirmarTransaccion=function(){
     	
-    	var datos=JSON.stringify(apuesta);
-    	console.log(angular.toJson(apuesta,true));
+    	
+    	console.log(angular.toJson($scope.apuestas,true));
     	$http({
 			method:'POST',
 			url:'https://tuchance-jhonesi.c9users.io/serviciosTuChance/api/apuestas/',
-			data: angular.toJson(apuesta,true)
+			data: angular.toJson($scope.apuestas,true)
 		}).then(function successCallback(response){
 			if(angular.fromJson(response.data).status==="OK"){
 				console.log('funciona');
