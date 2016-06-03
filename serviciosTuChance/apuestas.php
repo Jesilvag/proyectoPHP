@@ -13,7 +13,23 @@ use Phalcon\Http\Response;
    }
    echo json_encode($data);
 });
-
+$app->get('/api/ventasloterias',function() use ($app){
+   $phql="SELECT loterias.nombre,SUM(valor_apuesta)AS totalApuestas,SUM(valor_premio) AS totalPremios FROM apuestas
+          INNER JOIN loterias 
+          ON loterias.idloterias=apuestas.loteria
+          WHERE MONTH(fecha)=MONTH(CURDATE())
+          GROUP BY loteria";
+   $apuestas=$app->modelsManager->executeQuery($phql);
+   $data=array();
+   foreach ($apuestas as $apuesta ) {
+    $data[]=array(
+      'nombre' =>$apuesta->nombre,
+      'totalApuestas'=>$apuesta->totalApuestas,
+      'totalPremios'=>$apuesta->totalPremios   
+        );
+   }
+   echo json_encode($data);
+});
 $app->post('/api/apuestas',function() use ($app){
     $apuesta=$app->request->getJsonRawBody();
     print_r($apuesta);

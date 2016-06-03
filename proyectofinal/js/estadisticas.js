@@ -1,33 +1,41 @@
 $(document).ready(function(){
 	var nombres=[];
 	var ventas=[];
+var info={};
+var colors = ['red', 'green', 'blue', 'orange', 'yellow'];
+var colores=[];
 url = 'http://localhost/serviciosTuChance/api/ventas/';
 datos = {};
 $.getJSON(url, datos, function(response){
-    console.log(response[0].username);
+	info=response;
+   // console.log(info);
+    $.each(info, function(i,item){
+           nombres.push(info[i].username);
+           ventas.push(parseInt(info[i].total));
+           
+    });
+    
     
 });
-
+console.log(nombres);
+    console.log(ventas);
+    console.log(colores);
 var datosVentas={
+	
 		type:"pie",
 		data:{
 		datasets:[{
 			label:"Ventas por empleado",
-			data : [
-			     24,
-			     20,
-			     12,
-			     14
+			data : ventas,
+			backgroundColor:[
+			"#00cc99",
+			"#0066ff",
+			"#ff9966",
+			"#1a1aff"
 			],
-			backgroundColor:[],
 
 		}],
-		labels : [
-		"Luis",
-		"Martha",
-		"Juan",
-		"Lucia"
-		]
+		labels :nombres
 	},
 	options :{
 		responsive:true,
